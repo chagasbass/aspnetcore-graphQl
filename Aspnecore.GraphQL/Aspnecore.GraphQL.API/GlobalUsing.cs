@@ -1,0 +1,17 @@
+﻿global using Aspnecore.GraphQL.API.Domain.Queries;
+global using Aspnecore.GraphQL.API.Domain.Repositories;
+global using Aspnecore.GraphQL.API.Domain.Schemas;
+global using Aspnecore.GraphQL.API.Domain.Specs;
+global using Aspnecore.GraphQL.API.Domain.Types;
+global using Aspnecore.GraphQL.API.Infrastructure.Data.DataContexts;
+global using Aspnecore.GraphQL.API.Infrastructure.Data.Repositories;
+global using Dapper;
+global using GraphQL;
+global using GraphQL.Types;
+global using Microsoft.EntityFrameworkCore;
+global using System.Linq.Expressions;
+global using System.Text;
+global using Wise.Produtos.Domain.Entidades;
+global using Wise.Produtos.Infrastructure.Data.ContextosDeDados;
+global using Wise.Produtos.Infrastructure.Data.QueryHelpers;
+global using Wise.Produtos.Shared.Base;
