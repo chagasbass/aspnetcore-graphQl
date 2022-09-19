@@ -41,7 +41,7 @@ public class ProdutoCoresQueryRepository : IProdutoCoresQueryRepository
         return dado;
     }
 
-    public async Task<IEnumerable<ProdutoCores>> ListarProdutoPorGriffeECartelaAsync(List<string> griffes, List<string> cartelas, int rowsPage = 10, int pageNumber = 1)
+    public async Task<IEnumerable<ProdutoCores>> ListarProdutoPorGriffeECartelaAsync(List<string> griffes, List<string> cartelas, int rowsPage, int pageNumber, string ordenacao, string tipoOrdenacao)
     {
         try
         {
@@ -52,9 +52,9 @@ public class ProdutoCoresQueryRepository : IProdutoCoresQueryRepository
 
             var parametros = new { griffes, cartelas, rowsPage, pageNumber };
 
-            var query = ProdutoCoresQueryHelper.ListarProdutoCores();
+            var query = ProdutoCoresQueryHelper.ListarProdutoCores(ordenacao, tipoOrdenacao);
 
-            var produtosCores = await conexao.QueryAsync<ProdutoCores>(ProdutoCoresQueryHelper.ListarProdutoCores(), parametros);
+            var produtosCores = await conexao.QueryAsync<ProdutoCores>(query, parametros);
 
             return produtosCores;
         }

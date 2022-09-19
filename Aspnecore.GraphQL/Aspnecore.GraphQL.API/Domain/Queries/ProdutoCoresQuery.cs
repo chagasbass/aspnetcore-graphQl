@@ -17,8 +17,10 @@ public class ProdutoCoresQuery : ObjectGraphType
         {
             new QueryArgument<ListGraphType<StringGraphType>> { Name = "griffes" },
              new QueryArgument<ListGraphType<StringGraphType>> { Name = "cartelas" },
-             new QueryArgument<IntGraphType> { Name = "rowsPage",DefaultValue = 5 },
-             new QueryArgument<IntGraphType> { Name = "pageNumber" ,DefaultValue = 1}
+             new QueryArgument<IntGraphType> { Name = "rowsPage",DefaultValue = 10 },
+             new QueryArgument<IntGraphType> { Name = "pageNumber" ,DefaultValue = 1},
+             new QueryArgument<StringGraphType>{Name = "orderBy",DefaultValue = "produto"},
+             new QueryArgument<StringGraphType>{Name = "orderType",DefaultValue = "ASC"}
         };
 
         FieldAsync<ProdutoCoresType>(
@@ -47,6 +49,8 @@ public class ProdutoCoresQuery : ObjectGraphType
                 context.GetArgument<List<string>>("griffes"),
                 context.GetArgument<List<string>>("cartelas"),
                 context.GetArgument<int>("rowsPage"),
-                context.GetArgument<int>("pageNumber")));
+                context.GetArgument<int>("pageNumber"),
+                context.GetArgument<string>("orderBy"),
+                context.GetArgument<string>("orderType")));
     }
 }

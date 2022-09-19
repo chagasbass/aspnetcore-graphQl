@@ -2,7 +2,7 @@
 
 public static class ProdutoCoresQueryHelper
 {
-    public static string ListarProdutoCores()
+    public static string ListarProdutoCores(string campoOrdenacao, string tipoOrdenacao)
     {
         var query = new StringBuilder();
 
@@ -18,10 +18,38 @@ public static class ProdutoCoresQueryHelper
         query.AppendLine(" LEFT JOIN WS_ESTOQUE_PRODUTOS on WS_PRODUTOS.PRODUTO = WS_ESTOQUE_PRODUTOS.PRODUTO ");
         query.AppendLine(" WHERE(isnull(WS_ESTOQUE_PRODUTOS.PRONTA_ENTREGA, 0) = 1 and WS_ESTOQUE_PRODUTOS.ESTOQUE > 0) or isnull(WS_ESTOQUE_PRODUTOS.PRONTA_ENTREGA,0) = 0) ");
         query.AppendLine(" AND WS_PRODUTOS.GRIFFE IN @GRIFFES AND WS_PRODUTOS.CARTELA IN @CARTELAS ");
-        query.AppendLine(" ORDER BY WS_PRODUTOS.PRODUTO");
+
+        InserirOrdenacao(query, campoOrdenacao, tipoOrdenacao);
+
         query.AppendLine(" OFFSET ((@PageNumber - 1) * @RowsPage) ROWS");
         query.AppendLine(" FETCH NEXT @RowsPage ROWS ONLY");
 
         return query.ToString();
+    }
+
+    static void InserirOrdenacao(StringBuilder query, string campoOrdenacao, string tipoOrdenacao)
+    {
+        switch (campoOrdenacao)
+        {
+            case "produto":
+                query.AppendLine($" ORDER BY WS_PRODUTOS.PRODUTO {tipoOrdenacao}");
+                break;
+
+            case "corProduto":
+                query.AppendLine($" ORDER BY WS_PRODUTO_CORES.COR_PRODUTO {tipoOrdenacao}");
+                break;
+
+            case "fimVendas":
+                query.AppendLine($" ORDER BY WS_PRODUTO_CORES.FIM_VENDAS {tipoOrdenacao}");
+                break;
+
+            case "descCorProduto":
+                query.AppendLine($" ORDER BY WS_PRODUTO_CORES.DESC_COR_PRODUTO {tipoOrdenacao}");
+                break;
+
+            default:
+                query.AppendLine($" ORDER BY WS_PRODUTOS.PRODUTO {tipoOrdenacao}");
+                break;
+        }
     }
 }
